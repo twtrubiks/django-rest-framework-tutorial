@@ -231,6 +231,8 @@ PATCH : 更新資源部份內容
 
 剩下更詳細的資料就麻煩大家 GOOGLE了，我在現在來 測試 API   :smiley:
 
+測試 API 的工具很多，在這裡我們使用 [Postman](https://www.getpostman.com/) ，大家可以用自己習慣的工具。
+
 #### POST
 
 我們先來新增幾筆資料，如下圖
