@@ -1,7 +1,8 @@
 # django-rest-framework-tutorial
  Django-REST-framework 基本教學 - 從無到有 DRF-Beginners-Guide 📝
 
-* [Youtube Tutorial 等待新增]()
+* [Youtube Tutorial PART 1](https://youtu.be/lunVXqMVsrs)
+* [Youtube Tutorial PART 2](https://youtu.be/Qnir5iFpMyQ)
 
 
 透過 [Django REST framework](http://www.django-rest-framework.org/) ( DRF ) 建立 REST API 非常方便快速，
