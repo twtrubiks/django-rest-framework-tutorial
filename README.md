@@ -350,6 +350,12 @@ urlpatterns = [
 恭喜你，基本上到這裡，已經是一個非常簡單的  [Django-REST-framework](http://www.django-rest-framework.org/) ，趕快動手下去玩玩吧 :stuck_out_tongue:
 
 
+也可以觀看下一個範例 
+
+DataTables (server-side) 搭配 Django REST framework 簡單範例
+
+[DRF-dataTable-Example-server-side](https://github.com/twtrubiks/DRF-dataTable-Example-server-side)
+
 
 ## 執行環境
 * Python 3.4.3
