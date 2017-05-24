@@ -1,9 +1,9 @@
 # django-rest-framework-tutorial
+
  Django-REST-framework 基本教學 - 從無到有 DRF-Beginners-Guide 📝
 
 * [Youtube Tutorial PART 1](https://youtu.be/lunVXqMVsrs)
 * [Youtube Tutorial PART 2](https://youtu.be/Qnir5iFpMyQ)
-
 
 透過 [Django REST framework](http://www.django-rest-framework.org/) ( DRF ) 建立 REST API 非常方便快速，
 
@@ -28,13 +28,13 @@
 
 基本上安裝應該沒什麼問題。
 
-
 ### django-rest-framework 設定
 
-<b>請記得要將 [Django-REST-framework](http://www.django-rest-framework.org/) 加入設定檔</b>
+***請記得要將 [Django-REST-framework](http://www.django-rest-framework.org/) 加入設定檔***
 
-請在 settings.py 裡面的 <b>INSTALLED_APPS</b> 加入下方程式碼 (下圖)
-```
+請在 settings.py 裡面的 **INSTALLED_APPS** 加入下方程式碼 (下圖)
+
+```python
 INSTALLED_APPS = (
     ...
     'rest_framework',
@@ -44,10 +44,9 @@ INSTALLED_APPS = (
 
 ![alt tag](http://i.imgur.com/bm7cO0e.jpg)
 
-
 ### 建立 Django App
 
-先建立一個觀念，在 [Django](https://github.com/django/django) 中，通常我們會依照 <b>功能</b> 去建議一個 App ， 例如範例的 musics ，代表他是 管理音樂 的部份。
+先建立一個觀念，在 [Django](https://github.com/django/django) 中，通常我們會依照 **功能** 去建議一個 App ， 例如範例的 musics ，代表他是 管理音樂 的部份。
 
 有了這個觀念之後，我們動手開始做吧～
 
@@ -55,12 +54,11 @@ INSTALLED_APPS = (
 
 >python manage.py startapp musics
 
-<b>建立完請記得要將 App 加入設定檔</b>
+***建立完請記得要將 App 加入設定檔***
 
-請在 settings.py 裡面的 <b>INSTALLED_APPS</b> 加入 musics (也就是你自己建立的 App 名稱)
+請在 settings.py 裡面的 **INSTALLED_APPS** 加入 musics (也就是你自己建立的 App 名稱)
 
 ![alt tag](http://i.imgur.com/xP1MoFI.jpg)
-
 
 ### Models
 
@@ -70,7 +68,7 @@ INSTALLED_APPS = (
 
 首先，請先在 models.py 裡面增加下方程式碼 (下圖)
 
-```
+```python
 from django.db import models
 
 
@@ -94,7 +92,6 @@ class Music(models.Model):
 
 ![alt tag](http://i.imgur.com/xH4Sm3s.jpg)
 
-
 > python manage.py migrate
 
 ![alt tag](http://i.imgur.com/CpcdT3X.jpg)
@@ -107,14 +104,13 @@ migrate ： 根據 makemigrations 建立的檔案，去更新你的 DATABASE 。
 
 你可以使用[SQLiteBrowser](http://sqlitebrowser.org/) 或  [PyCharm](https://www.jetbrains.com/pycharm/) 觀看 DATABASE，
 
-你會發現多出一個 <b>music</b> 的 table ( 如下圖 )
+你會發現多出一個 **music** 的 table ( 如下圖 )
 
 ![alt tag](http://i.imgur.com/xVbTtjq.jpg)
 
 有沒有注意到我們明明在 models.py 裡面就沒有輸入 id ，可是 database 裡面卻有 id 欄位，
 
 這是因為 Django 預設會幫你帶入，所以可以不用設定。
-
 
 ### Serializers 序列化
 
@@ -124,7 +120,7 @@ Serializers 序列化 是 DRF 很重要的一個地方 :star:
 
 在 musics 裡面新增 serializers.py，並輸入下方程式碼
 
-```
+```python
 from rest_framework import serializers
 from musics.models import Music
 
@@ -137,12 +133,9 @@ class MusicSerializer(serializers.ModelSerializer):
 
 ```
 
-
 ![alt tag](http://i.imgur.com/KY5UwHW.jpg)
 
 如果你想要全部 fields ，可以使用第 8 行的寫法。
-
-
 
 ### Views
 
@@ -152,7 +145,7 @@ class MusicSerializer(serializers.ModelSerializer):
 
 請在 views.py 裡輸入下方程式碼 (下圖)
 
-```
+```python
 # Create your views here.
 from musics.models import Music
 from musics.serializers import MusicSerializer
@@ -171,19 +164,19 @@ class MusicViewSet(viewsets.ModelViewSet):
 
 只需要寫這樣，你就擁有 CRUD 的全部功能，是不是非常強大 :open_mouth:
 
-為什麼呢? 因為 DRF 的 <b>viewsets.ModelViewSet</b> 裡面幫你定義了這些功能，
+為什麼呢? 因為 DRF 的 **viewsets.ModelViewSet** 裡面幫你定義了這些功能，
 
 ![alt tag](http://i.imgur.com/GHbUOT5.jpg)
 
 當然，如果你需要，也可以覆寫他。
-
 
 ### Routers 路由
 
 DRF 提供 DefaultRouter 讓我們快速建立 Routers 路由。
 
 請先將 urls.py 裡面增加一些程式碼，如下圖
-```
+
+```python
 from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework.routers import DefaultRouter
@@ -200,7 +193,6 @@ urlpatterns = [
 ```
 
 ![alt tag](http://i.imgur.com/imdF1f8.jpg)
-
 
 最後執行 Django ， 然後瀏覽   [http://127.0.0.1:8000/api/](http://127.0.0.1:8000/api/)
 
@@ -256,7 +248,6 @@ PATCH : 更新資源部份內容
 
 ![alt tag](http://i.imgur.com/RHwAjpU.jpg)
 
-
 #### PUT
 
 如果你想修改特定資料，可以使用 [http://127.0.0.1:8000/api/music/2/](http://127.0.0.1:8000/api/music/2/)
@@ -275,8 +266,6 @@ PATCH : 更新資源部份內容
 
 ![alt tag](http://i.imgur.com/tOQS5cq.jpg)
 
-
-
 ### 授權 (Authenticaions )
 
 在 REST API 中，授權很重要，如果沒有授權，別人一直任意不受限制的操作你的 API ，很危險，
@@ -285,7 +274,7 @@ PATCH : 更新資源部份內容
 
 首先，請在 views.py 裡面新增  permission_classes
 
-```
+```python
 # Create your views here.
 from musics.models import Music
 from musics.serializers import MusicSerializer
@@ -303,9 +292,9 @@ class MusicViewSet(viewsets.ModelViewSet):
 
 ![alt tag](http://i.imgur.com/RbQrZLt.jpg)
 
-
 接著在 urls.py 裡面增加 api-auth
-```
+
+```python
 from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework.routers import DefaultRouter
@@ -320,8 +309,8 @@ urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
 ```
-![alt tag](http://i.imgur.com/YISdOvo.jpg)
 
+![alt tag](http://i.imgur.com/YISdOvo.jpg)
 
 最後執行 Django ， 然後瀏覽   [http://127.0.0.1:8000/api/](http://127.0.0.1:8000/api/) ，你會發現右上角多了 Log in 的按鈕
 
@@ -335,7 +324,8 @@ urlpatterns = [
 
 讓我們再次使用 POSTMAN，我們用 GET 當作範例
 
-#### GET
+#### GET 授權
+
 ![alt tag](http://i.imgur.com/MoMLRB3.jpg)
 
 有注意到嗎? response 說我沒有 授權，
@@ -346,24 +336,23 @@ urlpatterns = [
 
 ![alt tag](http://i.imgur.com/8leY8ZH.jpg)
 
-
 恭喜你，基本上到這裡，已經是一個非常簡單的  [Django-REST-framework](http://www.django-rest-framework.org/) ，趕快動手下去玩玩吧 :stuck_out_tongue:
 
-
-也可以觀看下一個範例 
+也可以觀看下一個範例
 
 DataTables (server-side) 搭配 Django REST framework 簡單範例
 
 [DRF-dataTable-Example-server-side](https://github.com/twtrubiks/DRF-dataTable-Example-server-side)
 
-
 ## 執行環境
+
 * Python 3.4.3
 
 ## Reference
+
 * [Django](https://www.djangoproject.com/)
 * [Django-REST-framework](http://www.django-rest-framework.org/)
 
-
 ## License
+
 MIT license
