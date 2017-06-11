@@ -266,11 +266,11 @@ PATCH : 更新資源部份內容
 
 ![alt tag](http://i.imgur.com/tOQS5cq.jpg)
 
-### 授權 (Authenticaions )
+### 授權 (Authentications )
 
 在 REST API 中，授權很重要，如果沒有授權，別人一直任意不受限制的操作你的 API ，很危險，
 
-所以 DRF 有提供 Authenticaions，讓我們來試試看吧~
+所以 DRF 有提供 Authentications，讓我們來試試看吧~
 
 首先，請在 views.py 裡面新增  permission_classes
 
