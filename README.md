@@ -338,9 +338,18 @@ urlpatterns = [
 
 ### Parsers
 
-在 REST framework 中有一個 [Parser classes](http://www.django-rest-framework.org/api-guide/parsers/#parsers) ，這個  Parser classes 主要是能控制接收的 Content-Type ， 例如說我規定 Content-Type 只接受 application/json ，這樣你就不能傳其他的 Content-Type ( 舉例 : text/plain ) 。通常如果沒有特別去設定 ，一般預設是使用 application / x-www-form-urlencode ，不過預設的可能不是你想要的或是說你想要設計只允許規範一種 Content-Type 。
+在 REST framework 中有一個 [Parser classes](http://www.django-rest-framework.org/api-guide/parsers/#parsers) ，這個  Parser
+classes 主要是能控制接收的 Content-Type ， 
 
-設定 Parsers 也很簡單，如果你希望全域的設定，可以加在 [settings.py](https://github.com/twtrubiks/django-rest-framework-tutorial/blob/master/django_rest_framework_tutorial/settings.py)，這樣就代表我只允許 Content-Type  是 application/json 。
+例如說我規定 Content-Type 只接受 application/json ，這樣你就不能傳其他的 Content-Type ( 舉例 : text/plain ) 。
+
+通常如果沒有特別去設定 ，一般預設是使用 application / x-www-form-urlencode ，不過預設的可能不是你想要的或是
+
+說你想要設計只允許規範一種 Content-Type 。
+
+設定 Parsers 也很簡單，如果你希望全域的設定，可以加在 [settings.py](https://github.com/twtrubiks/django-rest-framework-tutorial/blob/master/django_rest_framework_tutorial/settings.py)，
+
+這樣就代表我只允許 Content-Type  是 application/json 。
 
 ```python
 REST_FRAMEWORK = {
