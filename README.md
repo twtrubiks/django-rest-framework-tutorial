@@ -336,6 +336,103 @@ urlpatterns = [
 
 ![alt tag](http://i.imgur.com/8leY8ZH.jpg)
 
+### Parsers
+
+在 REST framework 中有一個 [Parser classes](http://www.django-rest-framework.org/api-guide/parsers/#parsers) ，這個  Parser classes 主要是能控制接收的 Content-Type ， 例如說我規定 Content-Type 只接受 application/json ，這樣你就不能傳其他的 Content-Type ( 舉例 : text/plain ) 。通常如果沒有特別去設定 ，一般預設是使用 application / x-www-form-urlencode ，不過預設的可能不是你想要的或是說你想要設計只允許規範一種 Content-Type 。
+
+設定 Parsers 也很簡單，如果你希望全域的設定，可以加在 [settings.py](https://github.com/twtrubiks/django-rest-framework-tutorial/blob/master/django_rest_framework_tutorial/settings.py)，這樣就代表我只允許 Content-Type  是 application/json 。
+
+```python
+REST_FRAMEWORK = {
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
+    )
+}
+```
+
+也可以針對特定 view 或 viewsets 加以設定 ，直接在 [views.py](https://github.com/twtrubiks/django-rest-framework-tutorial/blob/master/musics/views.py) 加上 parser_classes 即可
+
+```python
+class MusicViewSet(viewsets.ModelViewSet):
+    queryset = Music.objects.all()
+    serializer_class = MusicSerializer
+    permission_classes = (IsAuthenticated,)
+    parser_classes = (JSONParser,)
+```
+
+當然，parser_classes 不只有 [JSONParser](http://www.django-rest-framework.org/api-guide/parsers/#jsonparser)，還有 [FormParser](http://www.django-rest-framework.org/api-guide/parsers/#formparser) ， [MultiPartParser](http://www.django-rest-framework.org/api-guide/parsers/#multipartparser) 等等
+
+更多資訊可參考
+[http://www.django-rest-framework.org/api-guide/parsers/#parsersr](http://www.django-rest-framework.org/api-guide/parsers/#parsersr)
+
+### Extra link and actions
+
+我們使用 REST framework 時，難免會有想要制定額外的 route ，這時候我們可以利用
+`@detail_route` 或 `@list_route`。
+
+範例程式碼可參考 [views.py](https://github.com/twtrubiks/django-rest-framework-tutorial/blob/master/musics/views.py)
+
+***detail_route***
+
+使用方法很簡單，直接加上裝飾器 `@detail_route`  即可
+
+```python
+@detail_route(methods=['get'])
+def detail(self, request, pk=None):
+    music = get_object_or_404(Music, pk=pk)
+    result = {
+        'singer': music.singer,
+        'song': music.song
+    }
+
+    return Response(result, status=status.HTTP_200_OK)
+```
+
+以上面這個例子來說， URL pattern:  `/api/music/{pk}/detail/`，
+
+如果你沒有額外指定，通常你的 url_path 就是你 function 命名的名稱，
+
+當然，我們也可以自己額外定義 url_path，只需要加上  url_path 參數，
+
+範例如下
+
+```python
+@detail_route(methods=['get'], url_path='detail_self')
+def detail(self, request, pk=None):
+    music = get_object_or_404(Music, pk=pk)
+    result = {
+        'singer': music.singer,
+        'song': music.song
+    }
+
+    return Response(result, status=status.HTTP_200_OK)
+```
+
+以上面這個例子來說， URL pattern:  `/api/music/{pk}/detail_self/`，
+
+這樣就不會使用你的 function 做為 url_path 了。
+
+***list_route***
+
+使用方法很簡單，直接加上裝飾器 `@list_route`  即可
+
+```python
+ @list_route(methods=['get'])
+    def all_singer(self, request):
+        music = Music.objects.values_list('song', flat=True).distinct()
+        return Response(music, status=status.HTTP_200_OK)
+```
+
+以上面這個例子來說，URL pattern: `/api/music/all_singer/`
+
+他也有 url_path 的特性，如果要自定義，只需要加上 url_path 參數。
+
+看完了以上的例子，相信大家可以分辨 `@detail_route` 以及 `@list_route`的不同。
+
+更多資訊可參考 [http://www.django-rest-framework.org/api-guide/routers/#extra-link-and-actions](http://www.django-rest-framework.org/api-guide/routers/#extra-link-and-actions)
+
+## 後記
+
 恭喜你，基本上到這裡，已經是一個非常簡單的  [Django-REST-framework](http://www.django-rest-framework.org/) ，趕快動手下去玩玩吧 :stuck_out_tongue:
 
 也可以觀看下一個範例
