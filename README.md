@@ -339,7 +339,7 @@ urlpatterns = [
 ### Parsers
 
 在 REST framework 中有一個 [Parser classes](http://www.django-rest-framework.org/api-guide/parsers/#parsers) ，這個  Parser
-classes 主要是能控制接收的 Content-Type ， 
+classes 主要是能控制接收的 Content-Type ，
 
 例如說我規定 Content-Type 只接受 application/json ，這樣你就不能傳其他的 Content-Type ( 舉例 : text/plain ) 。
 
@@ -439,6 +439,62 @@ def detail(self, request, pk=None):
 看完了以上的例子，相信大家可以分辨 `@detail_route` 以及 `@list_route`的不同。
 
 更多資訊可參考 [http://www.django-rest-framework.org/api-guide/routers/#extra-link-and-actions](http://www.django-rest-framework.org/api-guide/routers/#extra-link-and-actions)
+
+### Testing
+
+先簡單介紹一下大家常聽到的 ***TDD*** 以及 ***BDD***
+
+TDD : Test-Driven Development。
+
+BDD : Behavior-driven development 。
+
+詳細地請大家再自行 GOOGLE，這邊要講 DRF 的 Testing，
+
+你也可以參考官網的教學　[http://www.django-rest-framework.org/api-guide/testing/](http://www.django-rest-framework.org/api-guide/testing/)
+
+或是你也可以參考我寫的範例
+[tests.py](https://github.com/twtrubiks/django-rest-framework-tutorial/blob/master/musics/tests.py)
+
+#### Test Case Scenarios
+
+* Create a music with API.
+* Retrieve a music with API.
+* Partial Update a music with API.
+* Update a music with API.
+* Delete a music with API.
+* Retrieve a music detail with API.
+* Get All singer with API.
+
+#### API Endpoints
+
+Music
+
+* ***/api/music/ (Music create and list endpoint)***
+* ***/api/music/{music-id}/ (Music retrieve, update and partial update and destroy endpoint)***
+
+* ***/api/music/{music-id}/detail/ (Music retrieve detail endpoint)***
+
+* ***/api/music/all_singer/ (Music list singer endpoint)***
+
+Usage
+
+```python
+python manage.py test
+```
+
+![](http://i.imgur.com/OTZ1IRD.png)
+
+因為本範例剛好只有建立一個 APP ，如果你有很多個 APP ，你也可以指定
+
+你要測試的 APP，範例如下
+
+```python
+python manage.py test [app 名稱]
+```
+
+```python
+python manage.py test musics
+```
 
 ## 後記
 

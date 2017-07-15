@@ -19,10 +19,10 @@ from rest_framework.routers import DefaultRouter
 from musics import views
 
 router = DefaultRouter()
-router.register(r'music', views.MusicViewSet)
+router.register(r'music', views.MusicViewSet, base_name='music')
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^api/', include(router.urls)),
+    url(r'^api/', include(router.urls, namespace='api'), name='api'),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

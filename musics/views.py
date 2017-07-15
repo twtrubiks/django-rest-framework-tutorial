@@ -31,5 +31,5 @@ class MusicViewSet(viewsets.ModelViewSet):
     # /api/music/all_singer/
     @list_route(methods=['get'])
     def all_singer(self, request):
-        music = Music.objects.values_list('song', flat=True).distinct()
+        music = Music.objects.values_list('singer', flat=True).distinct()
         return Response(music, status=status.HTTP_200_OK)
