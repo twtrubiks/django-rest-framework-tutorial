@@ -426,10 +426,10 @@ def detail(self, request, pk=None):
 使用方法很簡單，直接加上裝飾器 `@list_route`  即可
 
 ```python
- @list_route(methods=['get'])
-    def all_singer(self, request):
-        music = Music.objects.values_list('song', flat=True).distinct()
-        return Response(music, status=status.HTTP_200_OK)
+@list_route(methods=['get'])
+def all_singer(self, request):
+    music = Music.objects.values_list('singer', flat=True).distinct()
+    return Response(music, status=status.HTTP_200_OK)
 ```
 
 以上面這個例子來說，URL pattern: `/api/music/all_singer/`
