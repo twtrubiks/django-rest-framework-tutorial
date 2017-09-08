@@ -137,6 +137,25 @@ class MusicSerializer(serializers.ModelSerializer):
 
 如果你想要全部 fields ，可以使用第 8 行的寫法。
 
+2017/9/8
+
+ 增加 `SerializerMethodField`  使用方法 ，可參考 [serializers.py](https://github.com/twtrubiks/django-rest-framework-tutorial/blob/master/musics/serializers.py)， days_since_created 為例
+
+ ```python
+class MusicSerializer(serializers.ModelSerializer):
+    days_since_created = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Music
+        # fields = '__all__'
+        fields = ('id', 'song', 'singer', 'last_modify_date', 'created', 'days_since_created')
+
+    def get_days_since_created(self, obj):
+        return (now() - obj.created).days
+ ```
+
+更多說明請參考 [http://www.django-rest-framework.org/api-guide/fields/#serializermethodfield](http://www.django-rest-framework.org/api-guide/fields/#serializermethodfield)
+
 ### Views
 
 在  [Django 基本教學 - 從無到有 Django-Beginners-Guide](https://github.com/twtrubiks/django-tutorial) 中我們使用 views，
