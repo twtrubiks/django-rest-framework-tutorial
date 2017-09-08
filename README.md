@@ -139,7 +139,7 @@ class MusicSerializer(serializers.ModelSerializer):
 
 2017/9/8
 
- 增加 `SerializerMethodField`  使用方法 ，可參考 [serializers.py](https://github.com/twtrubiks/django-rest-framework-tutorial/blob/master/musics/serializers.py)， days_since_created 為例
+增加 `SerializerMethodField` 使用方法 ，可參考 [serializers.py](https://github.com/twtrubiks/django-rest-framework-tutorial/blob/master/musics/serializers.py)， days_since_created 為例
 
  ```python
 class MusicSerializer(serializers.ModelSerializer):
