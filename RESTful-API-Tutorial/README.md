@@ -4,7 +4,7 @@
 
 如果有介紹不清楚或有錯誤的地方，歡迎大家 issuse 給我 :stuck_out_tongue_winking_eye:
 
-* [Youtube Tutorial]()
+* [Youtube Tutorial](https://youtu.be/gHCB0sd47Is)
 
 ## 介紹
 
