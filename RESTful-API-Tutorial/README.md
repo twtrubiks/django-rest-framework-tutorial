@@ -20,7 +20,7 @@
 
 * ***/api/upload_file/ ( 新增檔案 )***
 
-* ***/api/update/ ( 更新檔案 )***
+* ***/api/update_file/ ( 更新檔案 )***
 
 * ***/api/delete_file/ ( 刪除檔案 )***
 
@@ -83,15 +83,37 @@ GET /api/file/search?key=hello/
 
 這樣你現在是不是在想，**RESTful** 太神啦 :heart_eyes:
 
-但是，記住，世界上沒有完美的東西，一定有他的缺點，
+### RESTful API 缺點
+
+記住，世界上沒有完美的東西，一定有他的缺點，
 
 **RESTful** 很方便沒錯，但只要用戶了解了您的網站 URL 結構，就會開始產生 **安全性** 的問題
 
-思考一個問題，一個用戶任意對你的 Database ( 資料庫 ) 操作 CRUD 是一件很可怕的事情
+思考一個問題，一個用戶任意對你的 Database ( 資料庫 ) 操作 CRUD 是一件很可怕的事情 :scream:
 
-所以我們一定要再處理對用戶進行身份驗證和授權（可參考之前在 [django-rest-framework-tutorial](https://github.com/twtrubiks/django-rest-framework-tutorial#授權-authentications- ) 裡介紹的授權），
+再思考一個問題，假設我們得到一個使用者的 URL 是這樣 `/api/uesrs/1/`，一般來說使用者只
 
-然後使用 HTTPS。
+能存取自己的用戶資料，並不能查看別的用戶資料。否則，有心人可以嘗試從  `/api/uesrs/1/` 開
+
+始 try 到 `/api/uesrs/100/` 得到其他的用戶資料。這是比較基本了問題，通常我們會先去驗證這個
+
+使用者的身份，再來決定是否有權限可以存取用戶資料，所以我們一定要再處理對用戶進行身份
+
+驗證和授權（可參考之前在 [django-rest-framework-tutorial](https://github.com/twtrubiks/django-rest-framework-tutorial#授權-authentications- ) 裡介紹的授權），然後使用 HTTPS。
+
+再談談一個問題，現在很多都是前後端分離，通常我們會為了方便以 JSON 作為傳送的格式，但是
+
+有時候可能會不小心把一些敏感的資訊送到前端，這樣就可能會導致資料外洩，或是有心人透過這
+
+些資訊，去得到別人的資料以及有 **意思的** 訊息。所以當你在設計 API 時，一定要想想這些資訊洩
+
+漏了會不會有什麼影響，如果有，可能資料需要再被加密之類的。
+
+最後一個問題是實際面的問題，很多時候，我們的業務邏輯非常複雜，會導致如果要很嚴格的遵守
+
+RESTful API  的規則，就不是那麼的好用，所以，有時候還是可以在 RESTful API  做一些修改，不一
+
+定要那麼死死得遵守他的規則 :stuck_out_tongue:。
 
 ### 狀態碼
 
