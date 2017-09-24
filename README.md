@@ -7,6 +7,8 @@
 
 透過 [Django REST framework](http://www.django-rest-framework.org/) ( DRF ) 建立 REST API 非常方便快速，
 
+ REST API ? 這是什麼，可以吃嗎 ? 如果你想先對  REST API 有一些認識，可參考之前寫的 [認識 RESTful API](https://github.com/twtrubiks/django-rest-framework-tutorial/tree/master/RESTful-API-Tutorial)
+
 在這裡教大家建立自己的第一個 [Django-REST-framework](http://www.django-rest-framework.org/)  :smile:
 
 建議對 [Django](https://github.com/django/django) 還不熟的人，可以先閱讀我之前寫的 [Django 基本教學 - 從無到有 Django-Beginners-Guide](https://github.com/twtrubiks/django-tutorial)，
