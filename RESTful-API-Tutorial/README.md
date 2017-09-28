@@ -121,7 +121,7 @@ GET 方法是安全方法，也就是不會對 Server 有修改，你只是讀�
 
 他是什麼呢？ 簡單解釋，假設不考慮錯誤其他因素，若我們請求多次和單次
 
-結果是一樣的，就是 Method Idempotent。
+結果（ API 的 response ）是一樣的，就是 Method Idempotent。
 
 像是 GET 就是 Method Idempotent，因為不管請求幾次，結果都是相同的；反之
 
