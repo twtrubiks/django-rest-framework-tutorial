@@ -16,7 +16,9 @@ Resource : 資源
 
 Representational : 像是 JSON，XML，YAML 等等......
 
-State Transfer : 狀態傳輸。透過 HTTP 動詞實現 （ GET，POST，PUT，DELETE）。
+State Transfer : 狀態傳輸。透過 HTTP 動詞實現 （ GET，POST，PUT，DELETE），
+
+狀態可以定義成 Resource 的狀態，類似資料庫中 CRUD 操作後的結果。
 
 以上看不懂沒關係，略懂即可，我知道很難懂 :fearful:
 
