@@ -16,10 +16,13 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework.routers import DefaultRouter
-from musics import views
+
+from musics.views import MusicViewSet
+from shares.views import ShareViewSet
 
 router = DefaultRouter()
-router.register(r'music', views.MusicViewSet, base_name='music')
+router.register(r'music', MusicViewSet, base_name='music')
+router.register(r'shares', ShareViewSet, base_name='share')
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

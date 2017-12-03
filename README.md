@@ -139,7 +139,7 @@ class MusicSerializer(serializers.ModelSerializer):
 
 如果你想要全部 fields ，可以使用第 8 行的寫法。
 
-2017/9/8
+2017/9/8 新增
 
 增加 `SerializerMethodField` 使用方法 ，可參考 [serializers.py](https://github.com/twtrubiks/django-rest-framework-tutorial/blob/master/musics/serializers.py)， days_since_created 為例
 
@@ -356,6 +356,50 @@ urlpatterns = [
 我的 帳號/密碼 設定為 twtrubiks/password123
 
 ![alt tag](http://i.imgur.com/8leY8ZH.jpg)
+
+2017/12/3 新增
+
+上面的方法是針對整個 `class` 設定權限，那我們可不可以依照 method 呢？
+
+幾個例子，我希望 GET 時不用權限，但是 POST 時就需要權限，這樣該怎麼做呢？
+
+可以參考 shares/[views.py](https://github.com/twtrubiks/django-rest-framework-tutorial/blob/master/shares/views.py)
+
+```python
+class ShareViewSet(viewsets.ModelViewSet):
+    queryset = Share.objects.all()
+    serializer_class = ShareSerializer
+    parser_classes = (JSONParser,)
+
+    def get_permissions(self):
+        if self.action in ('create',):
+            self.permission_classes = [IsAuthenticated]
+        return [permission() for permission in self.permission_classes]
+
+    # [GET] api/shares/
+    def list(self, request, **kwargs):
+        users = Share.objects.all()
+        serializer = ShareSerializer(users, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    # [POST] api/shares/
+    @permission_classes((IsAuthenticated,))
+    def create(self, request, **kwargs):
+        name = request.data.get('name')
+        users = Share.objects.create(name=name)
+        serializer = ShareSerializer(users)
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+```
+
+透過裝飾器`permission_classes`來為我們的 method 分別設定權限，並且有一個
+
+`get_permissions`來決定是否需要權限（在這裡設定 `create`， 也就是 POST）。
+
+這個例子就是 **GET** 時**不用權限**，但是 **POST** 時就**需要權限**。
+
+更多詳細介紹可參考官網 [authentication](http://www.django-rest-framework.org/api-guide/authentication/)
 
 ### Parsers
 
