@@ -565,11 +565,15 @@ python manage.py test musics
 
 恭喜你，基本上到這裡，已經是一個非常簡單的  [Django-REST-framework](http://www.django-rest-framework.org/) ，趕快動手下去玩玩吧 :stuck_out_tongue:
 
-也可以觀看下一個範例
+如果意猶未盡，延伸閱讀 :satisfied:
 
-DataTables (server-side) 搭配 Django REST framework 簡單範例
+* [Django-REST-framework 基本教學 - 從無到有 DRF-Beginners-Guide](https://github.com/twtrubiks/django-rest-framework-tutorial)
 
-[DRF-dataTable-Example-server-side](https://github.com/twtrubiks/DRF-dataTable-Example-server-side)
+* [DRF-dataTable-Example-server-side](https://github.com/twtrubiks/DRF-dataTable-Example-server-side) - DataTables Example (server-side) - Python Django REST framework
+
+* [Deploying_Django_To_Heroku_Tutorial](https://github.com/twtrubiks/Deploying_Django_To_Heroku_Tutorial) - Deploying a Django App To Heroku Tutorial
+
+* [結合 Django + jQuery 實現無限捲軸 Infinite Scroll 📝](https://github.com/twtrubiks/ptt_beauty_infinite_scroll)
 
 ## 執行環境
 
