@@ -742,6 +742,75 @@ python manage.py test [app 名稱]
 python manage.py test musics
 ```
 
+### Model Meta options
+
+`app_label`
+
+還記得文章前面提到的 `INSTALLED_APPS` 嗎 ? 如果你沒有將 model 寫在 `INSTALLED_APPS` 中，
+
+這時候你就必須在 Model Meta 中宣告 ( 否則會報錯 )，像下面這樣
+
+```python
+class Music(models.Model):
+    song = models.TextField()
+    singer = models.TextField()
+    last_modify_date = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = "music"
+        app_label = "music"
+```
+
+可參考 [https://docs.djangoproject.com/en/1.11/ref/models/options/#app-label](https://docs.djangoproject.com/en/1.11/ref/models/options/#app-label)
+
+這邊的東西很多，我有用到就會慢慢補 :kissing_closed_eyes:
+
+更多詳細可參考 [https://docs.djangoproject.com/en/1.11/ref/models/options/#model-meta-options](https://docs.djangoproject.com/en/1.11/ref/models/options/#model-meta-options)
+
+### Multiple databases
+
+這邊的部分也蠻多的，有空我會補 :kissing_closed_eyes:
+
+更多詳細可參考 [https://docs.djangoproject.com/en/2.0/topics/db/multi-db/](https://docs.djangoproject.com/en/2.0/topics/db/multi-db/)
+
+#### Automatic database routing
+
+這部分我先簡單寫個範例，以後有情境我在將細節補上來:smiley:
+
+更多詳細可參考 [https://docs.djangoproject.com/en/2.0/topics/db/multi-db/#automatic-database-routing)](https://docs.djangoproject.com/en/2.0/topics/db/multi-db/#automatic-database-routing)
+
+api/[routers.py](xx)
+
+```python
+class AuthRouter:
+    """
+    A router to control all database operations on models in the
+    auth application.
+    """
+    def db_for_read(self, model, **hints):
+        """
+        Attempts to read auth models go to auth_db.
+        """
+        if model._meta.app_label == 'musics':
+            return 'default'
+        return None
+
+    def db_for_write(self, model, **hints):
+        """
+        Attempts to write auth models go to auth_db.
+        """
+        if model._meta.app_label == 'auth':
+            return 'auth_db'
+        return None
+```
+
+[settings.py](xxx)
+
+```python
+DATABASE_ROUTERS = ['api.routers.AuthRouter']
+```
+
 ## 後記
 
 恭喜你，基本上到這裡，已經是一個非常簡單的  [Django-REST-framework](http://www.django-rest-framework.org/) ，趕快動手下去玩玩吧 :stuck_out_tongue:

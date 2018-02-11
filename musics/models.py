@@ -13,6 +13,7 @@ class Music(models.Model):
 
     class Meta:
         db_table = "music"
+        app_label = "music"
 
 
 def fun_raw_sql_query(**kwargs):
