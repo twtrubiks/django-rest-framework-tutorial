@@ -780,7 +780,7 @@ class Music(models.Model):
 
 更多詳細可參考 [https://docs.djangoproject.com/en/2.0/topics/db/multi-db/#automatic-database-routing)](https://docs.djangoproject.com/en/2.0/topics/db/multi-db/#automatic-database-routing)
 
-api/[routers.py](xx)
+api/[routers.py](https://github.com/twtrubiks/django-rest-framework-tutorial/blob/master/api/routers.py)
 
 ```python
 class AuthRouter:
@@ -805,7 +805,7 @@ class AuthRouter:
         return None
 ```
 
-[settings.py](xxx)
+在 [settings.py](https://github.com/twtrubiks/django-rest-framework-tutorial/blob/master/django_rest_framework_tutorial/settings.py) 中加上這段
 
 ```python
 DATABASE_ROUTERS = ['api.routers.AuthRouter']
