@@ -325,6 +325,149 @@ PATCH : 更新資源部份內容
 
 ![alt tag](http://i.imgur.com/tOQS5cq.jpg)
 
+### Performing raw SQL queries
+
+2018/2/11 新增
+
+雖然 Django ORM 使用起來很棒，又容易使用 ( 如不了解 Django ORM，請參考我之前的介紹文章 [Django ORM](https://github.com/twtrubiks/django-tutorial#django-orm) )，
+
+但有時候我們還是會希望使用 raw SQL ，像是邏輯比較複雜的，不適合使用 Django ORM 寫，畢竟 Django ORM 的底層
+
+還是 raw SQL，Django 提供兩種方法來完成他，分別是 **Performing raw queries** 以及 **Executing custom SQL directly**。
+
+這邊提醒一下，如果使用這種方法，請注意 [SQL injection protection](https://docs.djangoproject.com/en/1.11/topics/security/#sql-injection-protection)。
+
+更多詳細可參考 [https://docs.djangoproject.com/en/1.11/topics/db/sql/#performing-raw-queries](https://docs.djangoproject.com/en/1.11/topics/db/sql/#performing-raw-queries)
+
+#### Performing raw queries
+
+透過 `Manager.raw()`這個方法，可參考 [models.py](https://github.com/twtrubiks/django-rest-framework-tutorial/blob/master/musics/models.py)
+
+簡單說明一下這段 code，前端可以帶入 song 的名稱近來查詢，也可以不帶，不帶的話就是回傳全部
+
+```python
+def fun_raw_sql_query(**kwargs):
+    song = kwargs.get('song')
+    if song:
+        result = Music.objects.raw('SELECT * FROM music WHERE song = %s', [song])
+    else:
+        result = Music.objects.raw('SELECT * FROM music')
+    return result
+```
+
+ [views.py](https://github.com/twtrubiks/django-rest-framework-tutorial/blob/master/musics/views.py) 中的片段 code
+
+```python
+# /api/music/raw_sql_query/
+@list_route(methods=['get'])
+def raw_sql_query(self, request):
+    song = request.query_params.get('song', None)
+    music = fun_raw_sql_query(song=song)
+    serializer = MusicSerializer(music, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+```
+
+這個方法有 map 到你的 models，所以一樣可以序列化
+
+request
+
+![alt tag](https://i.imgur.com/jz9aqi4.png)
+
+response
+
+![alt tag](https://i.imgur.com/0p3KN3e.png)
+
+更多詳細可參考 [https://docs.djangoproject.com/en/1.11/topics/db/sql/#performing-raw-queries](https://docs.djangoproject.com/en/1.11/topics/db/sql/#performing-raw-queries)
+
+#### Executing custom SQL directly
+
+有時候 `Manager.raw()` 是不夠的，像是你可能需要 queries 沒有完全 map 到 models 的資料，
+
+或是執行 UPDATE, INSERT, or DELETE queries。
+
+當我們使用這個方法時，是完全的繞過 model ，直接 access database。
+
+可參考 [models.py](https://github.com/twtrubiks/django-rest-framework-tutorial/blob/master/musics/models.py)
+
+簡單說明一下這段 code，前端可以帶入 id 和 song 來更新資料
+
+```python
+def namedtuplefetchall(cursor):
+    # Return all rows from a cursor as a namedtuple
+    desc = cursor.description
+    nt_result = namedtuple('Result', [col[0] for col in desc])
+    return [nt_result(*row) for row in cursor.fetchall()]
+
+
+def fun_sql_cursor_update(**kwargs):
+    song = kwargs.get('song')
+    pk = kwargs.get('pk')
+
+    '''
+    Note that if you want to include literal percent signs in the query,
+    you have to double them in the case you are passing parameters:
+    '''
+    with connection.cursor() as cursor:
+        cursor.execute("UPDATE music SET song = %s WHERE id = %s", [song, pk])
+        cursor.execute("SELECT * FROM music WHERE id = %s", [pk])
+        # result = cursor.fetchone()
+        result = namedtuplefetchall(cursor)
+    result = [
+        {
+            'id': r.id,
+            'song': r.song,
+            'singer': r.singer,
+            'last_modify_date': r.last_modify_date,
+            'created': r.created,
+        }
+        for r in result
+    ]
+
+    return result
+```
+
+補充一下上面英文註解的說明，假設今天我們使用 like 搜尋，也就是會包含 `%` 的符號，
+
+這時候我們必須重複 `%` 這個符號，也就是 `%%`，請看以下的例子，
+
+假如我想執行這個 sql
+
+```sql
+SELECT * FROM music WHERE song like 'song%'
+```
+
+在 `cursor.execute` 中，必須多加上一個 `%`
+
+```python
+cursor.execute("SELECT * FROM music WHERE song like 'song%%'", [])
+```
+
+ [views.py](https://github.com/twtrubiks/django-rest-framework-tutorial/blob/master/musics/views.py) 中的片段 code
+
+ 由於這個方法是沒有 map 到 model，所以我們沒辦法進行序列化，
+
+ 這邊將直接回傳一個 dict 字典，
+
+```python
+# /api/music/{pk}/sql_cursor_update/
+@detail_route(methods=['put'])
+def sql_cursor_update(self, request, pk=None):
+    song = request.data.get('song', None)
+    if song:
+        music = fun_sql_cursor_update(song=song, pk=pk)
+        return Response(music, status=status.HTTP_200_OK)
+```
+
+request
+
+![alt tag](https://i.imgur.com/0Qfyrra.png)
+
+response
+
+![alt tag](https://i.imgur.com/gVFgSPx.png)
+
+更多詳細可參考 [https://docs.djangoproject.com/en/1.11/topics/db/sql/#executing-custom-sql-directly](https://docs.djangoproject.com/en/1.11/topics/db/sql/#executing-custom-sql-directly)
+
 ### 授權 (Authentications )
 
 在 REST API 中，授權很重要，如果沒有授權，別人一直任意不受限制的操作你的 API ，很危險，
