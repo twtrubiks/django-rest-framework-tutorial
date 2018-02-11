@@ -3,8 +3,14 @@ from rest_framework import serializers
 from musics.models import Music
 
 
+class ToUpperCaseCharField(serializers.CharField):
+    def to_representation(self, value):
+        return value.upper()
+
+
 class MusicSerializer(serializers.ModelSerializer):
     days_since_created = serializers.SerializerMethodField()
+    singer = ToUpperCaseCharField()
 
     class Meta:
         model = Music

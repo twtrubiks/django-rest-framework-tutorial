@@ -158,6 +158,44 @@ class MusicSerializer(serializers.ModelSerializer):
 
 更多說明請參考 [http://www.django-rest-framework.org/api-guide/fields/#serializermethodfield](http://www.django-rest-framework.org/api-guide/fields/#serializermethodfield)
 
+2018/2/11 新增
+
+有時候會需要自定義序列化，舉個例子，假如我希望將回傳的 singer 都轉成大寫這樣我要該怎麼辦 ?
+
+這邊不希望又多一個 property 回傳 ( singer1 之類的 )，所以這時候我們就必須自定義序列化，也就是
+
+透過 `.to_representation(self, value)` 這個方法，更多說明請參考 [Custom relational fields](http://www.django-rest-framework.org/api-guide/relations/#custom-relational-fields)。
+
+範例寫法可參考 [serializers.py](https://github.com/twtrubiks/django-rest-framework-tutorial/blob/master/musics/serializers.py)
+
+```python
+from django.utils.timezone import now
+from rest_framework import serializers
+from musics.models import Music
+
+
+class ToUpperCaseCharField(serializers.CharField):
+    def to_representation(self, value):
+        return value.upper()
+
+
+class MusicSerializer(serializers.ModelSerializer):
+    days_since_created = serializers.SerializerMethodField()
+    singer = ToUpperCaseCharField()
+
+    class Meta:
+        model = Music
+        # fields = '__all__'
+        fields = ('id', 'song', 'singer', 'last_modify_date', 'created', 'days_since_created')
+
+    def get_days_since_created(self, obj):
+        return (now() - obj.created).days
+```
+
+這樣你就會發現回傳的 singer 都被轉成大寫了
+
+![alt tag](https://i.imgur.com/WsVG86d.png)
+
 ### Views
 
 在  [Django 基本教學 - 從無到有 Django-Beginners-Guide](https://github.com/twtrubiks/django-tutorial) 中我們使用 views，
@@ -547,7 +585,7 @@ Usage
 python manage.py test
 ```
 
-![](http://i.imgur.com/OTZ1IRD.png)
+![img](http://i.imgur.com/OTZ1IRD.png)
 
 因為本範例剛好只有建立一個 APP ，如果你有很多個 APP ，你也可以指定
 
