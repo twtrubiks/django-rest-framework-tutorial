@@ -33,6 +33,9 @@ ALLOWED_HOSTS = []
 #     )
 # }
 
+REST_FRAMEWORK = {
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.AcceptHeaderVersioning'
+}
 # Application definition
 
 INSTALLED_APPS = [

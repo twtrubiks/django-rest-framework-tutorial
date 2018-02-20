@@ -2,7 +2,7 @@
 from django.shortcuts import get_object_or_404
 from musics.models import Music
 from musics.models import fun_raw_sql_query, fun_sql_cursor_update
-from musics.serializers import MusicSerializer
+from musics.serializers import MusicSerializer, MusicSerializerV1
 
 from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
@@ -50,3 +50,13 @@ class MusicViewSet(viewsets.ModelViewSet):
         if song:
             music = fun_sql_cursor_update(song=song, pk=pk)
             return Response(music, status=status.HTTP_200_OK)
+
+    # /api/music/version_api/
+    @list_route(methods=['get'])
+    def version_api(self, request):
+        music = Music.objects.all()
+        if self.request.version == '1.0':
+            serializer = MusicSerializerV1(music, many=True)
+        else:
+            serializer = MusicSerializer(music, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

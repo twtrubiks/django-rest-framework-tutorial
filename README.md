@@ -742,6 +742,52 @@ python manage.py test [app 名稱]
 python manage.py test musics
 ```
 
+### Versioning
+
+有時候我們可能需要版本來控制 API ，當然沒版本的 API 也是可以被接受的，
+
+可參考 [Non-versioned systems can also be appropriate](https://www.infoq.com/articles/roy-fielding-on-versioning)。
+
+要設定 versioning，請先到 [settings.py](https://github.com/twtrubiks/django-rest-framework-tutorial/blob/master/django_rest_framework_tutorial/settings.py) 加入下方設定，
+
+```python
+REST_FRAMEWORK = {
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.AcceptHeaderVersioning'
+}
+```
+
+有很多方法可以實現，分別為
+
+`AcceptHeaderVersioning` `URLPathVersioning` `NamespaceVersioning` `HostNameVersioning` `QueryParameterVersioning`，
+
+由於 `AcceptHeaderVersioning` 這個方法通常被認為是最佳的設計，所以這邊就用它來介紹。
+
+使用序列化的不同來介紹 Versioning，[views.py](https://github.com/twtrubiks/django-rest-framework-tutorial/blob/master/musics/views.py) 如下，
+
+```python
+# /api/music/version_api/
+@list_route(methods=['get'])
+def version_api(self, request):
+    music = Music.objects.all()
+    if self.request.version == '1.0':
+        serializer = MusicSerializerV1(music, many=True)
+    else:
+        serializer = MusicSerializer(music, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+```
+
+其實也很簡單，就是判斷 `self.request.version` 是否有值，
+
+如果 header 沒有帶入版本號，就會使用 `MusicSerializer` 進行序列化，
+
+![alt tag](https://i.imgur.com/kOuzqgG.png)
+
+如果 header 有帶入版本號，就會使用 `MusicSerializerV1` 進行序列化。
+
+![alt tag](https://i.imgur.com/kGRJmt2.png)
+
+其他的使用方法，請參考官網 [Versioning](http://www.django-rest-framework.org/api-guide/versioning/)。
+
 ### Model Meta options
 
 `app_label`
