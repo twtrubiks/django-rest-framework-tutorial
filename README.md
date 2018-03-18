@@ -4,6 +4,8 @@
 
 * [Youtube Tutorial PART 1](https://youtu.be/lunVXqMVsrs)
 * [Youtube Tutorial PART 2](https://youtu.be/Qnir5iFpMyQ)
+* [Youtube Tutorial PART 3](https://youtu.be/3qoB3RVoOvA)
+* [Youtube Tutorial PART 4](https://youtu.be/yvH1-jx_-z4)
 
 透過 [Django REST framework](http://www.django-rest-framework.org/) ( DRF ) 建立 REST API 非常方便快速，
 
@@ -540,6 +542,8 @@ urlpatterns = [
 
 2017/12/3 新增
 
+* [Youtube Tutorial PART 3](https://youtu.be/3qoB3RVoOvA)
+
 上面的方法是針對整個 `class` 設定權限，那我們可不可以依照 method 呢？
 
 幾個例子，我希望 GET 時不用權限，但是 POST 時就需要權限，這樣該怎麼做呢？
@@ -621,6 +625,8 @@ class MusicViewSet(viewsets.ModelViewSet):
 [http://www.django-rest-framework.org/api-guide/parsers/#parsersr](http://www.django-rest-framework.org/api-guide/parsers/#parsersr)
 
 ### Extra link and actions
+
+* [Youtube Tutorial PART 4](https://youtu.be/yvH1-jx_-z4)
 
 我們使用 REST framework 時，難免會有想要制定額外的 route ，這時候我們可以利用
 `@detail_route` 或 `@list_route`。
