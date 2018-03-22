@@ -6,6 +6,7 @@
 * [Youtube Tutorial PART 2](https://youtu.be/Qnir5iFpMyQ)
 * [Youtube Tutorial PART 3](https://youtu.be/3qoB3RVoOvA)
 * [Youtube Tutorial PART 4](https://youtu.be/yvH1-jx_-z4)
+* [Youtube Tutorial PART 5](https://youtu.be/YMtz7OSwIlE)
 
 透過 [Django REST framework](http://www.django-rest-framework.org/) ( DRF ) 建立 REST API 非常方便快速，
 
@@ -343,6 +344,8 @@ PATCH : 更新資源部份內容
 
 #### Performing raw queries
 
+* [Youtube Tutorial PART 5](https://youtu.be/YMtz7OSwIlE)
+
 透過 `Manager.raw()`這個方法，可參考 [models.py](https://github.com/twtrubiks/django-rest-framework-tutorial/blob/master/musics/models.py)
 
 簡單說明一下這段 code，前端可以帶入 song 的名稱近來查詢，也可以不帶，不帶的話就是回傳全部
@@ -385,7 +388,7 @@ response
 
 有時候 `Manager.raw()` 是不夠的，像是你可能需要 queries 沒有完全 map 到 models 的資料，
 
-或是執行 UPDATE, INSERT, or DELETE queries。
+或是執行 UPDATE, INSERT, or DELETE。
 
 當我們使用這個方法時，是完全的繞過 model ，直接 access database。
 
