@@ -7,6 +7,7 @@
 * [Youtube Tutorial PART 3](https://youtu.be/3qoB3RVoOvA)
 * [Youtube Tutorial PART 4](https://youtu.be/yvH1-jx_-z4)
 * [Youtube Tutorial PART 5](https://youtu.be/YMtz7OSwIlE)
+* [Youtube Tutorial PART 6](https://youtu.be/jONV4Bfjq6g)
 
 透過 [Django REST framework](http://www.django-rest-framework.org/) ( DRF ) 建立 REST API 非常方便快速，
 
@@ -330,6 +331,8 @@ PATCH : 更新資源部份內容
 
 ### Performing raw SQL queries
 
+* [Youtube Tutorial PART 5](https://youtu.be/YMtz7OSwIlE)
+
 2018/2/11 新增
 
 雖然 Django ORM 使用起來很棒，又容易使用 ( 如不了解 Django ORM，請參考我之前的介紹文章 [Django ORM](https://github.com/twtrubiks/django-tutorial#django-orm) )，
@@ -343,8 +346,6 @@ PATCH : 更新資源部份內容
 更多詳細可參考 [https://docs.djangoproject.com/en/1.11/topics/db/sql/#performing-raw-queries](https://docs.djangoproject.com/en/1.11/topics/db/sql/#performing-raw-queries)
 
 #### Performing raw queries
-
-* [Youtube Tutorial PART 5](https://youtu.be/YMtz7OSwIlE)
 
 透過 `Manager.raw()`這個方法，可參考 [models.py](https://github.com/twtrubiks/django-rest-framework-tutorial/blob/master/musics/models.py)
 
@@ -752,6 +753,8 @@ python manage.py test musics
 ```
 
 ### Versioning
+
+* [Youtube Tutorial PART 6](https://youtu.be/jONV4Bfjq6g)
 
 有時候我們可能需要版本來控制 API ，當然沒版本的 API 也是可以被接受的，
 
