@@ -1,2 +1,2 @@
-django<2.0
-djangorestframework
+Django==2.2.1
+djangorestframework==3.9.3
