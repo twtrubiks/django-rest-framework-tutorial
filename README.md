@@ -52,7 +52,7 @@ INSTALLED_APPS = (
 
 ### 建立 Django App
 
-先建立一個觀念，在 [Django](https://github.com/django/django) 中，通常我們會依照 **功能** 去建議一個 App ， 例如範例的 musics ，代表他是 管理音樂 的部份。
+先建立一個觀念，在 [Django](https://github.com/django/django) 中，通常我們會依照 **功能** 去建立一個 App ， 例如範例的 musics ，代表他是 管理音樂 的部份。
 
 有了這個觀念之後，我們動手開始做吧～
 
@@ -573,7 +573,6 @@ class ShareViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     # [POST] api/shares/
-    @permission_classes((IsAuthenticated,))
     def create(self, request, **kwargs):
         name = request.data.get('name')
         users = Share.objects.create(name=name)
@@ -582,9 +581,7 @@ class ShareViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 ```
 
-透過裝飾器`permission_classes`來為我們的 method 分別設定權限，並且有一個
-
-`get_permissions`來決定是否需要權限（在這裡設定 `create`， 也就是 POST）。
+透過`get_permissions`來決定是否需要權限（在這裡設定 `create`， 也就是 POST）。
 
 這個例子就是 **GET** 時**不用權限**，但是 **POST** 時就**需要權限**。
 
