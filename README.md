@@ -2,7 +2,7 @@
 
  Django-REST-framework 基本教學 - 從無到有 DRF-Beginners-Guide 📝
 
-* [Youtube Tutorial PART 1 - 等待新增](xxxx)
+* [Youtube Tutorial PART 1 - 簡介](https://youtu.be/l9sq1DbVMAA)
 
 因為 `Django > 2.0` 改動蠻多了，所以這邊會把一些和 `Django < 2.0` 不一樣的地方寫出來。
 
@@ -115,9 +115,9 @@ urlpatterns = [
 `@action` decorator 搭配 `detail=True` ( 就是以前的 `@detail_route` )
 
 ```python
-# /api/music/{pk}/detail/
+# [GET] /api/musics/{pk}/detail/
 @action(detail=True, methods=['get'], url_path='detail')
-def detail(self, request, pk=None):
+def detail_action(self, request, pk=None):
     music = get_object_or_404(Music, pk=pk)
     result = {
         'singer': music.singer,
@@ -131,7 +131,7 @@ def detail(self, request, pk=None):
 `@action` decorator 搭配 `detail=False` ( 就是以前的 `@list_route` )
 
 ```python
-# /api/music/all_singer/
+# [GET] /api/musics/all_singer/
 @action(detail=False, methods=['get'], url_path='all_singer')
 def all_singer(self, request):
     music = Music.objects.values_list('singer', flat=True).distinct()
