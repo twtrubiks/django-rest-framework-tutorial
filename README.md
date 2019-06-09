@@ -573,7 +573,6 @@ class ShareViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     # [POST] api/shares/
-    @permission_classes((IsAuthenticated,))
     def create(self, request, **kwargs):
         name = request.data.get('name')
         users = Share.objects.create(name=name)
