@@ -222,6 +222,7 @@ class MusicViewSet(viewsets.ModelViewSet):
     serializer_class = MusicSerializer
 
 ```
+Django > 2 以上版本的view程式碼可以參考(https://github.com/YYxDeveloper/django-rest-framework-tutorial/blob/master/DRF/musics/views.py)
 
 ![alt tag](http://i.imgur.com/GMSz7u7.jpg)
 
